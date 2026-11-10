@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-// import { useParams } from "react-router-dom"
 import BooksAPI from "../services/BooksAPI"
 import { Link } from "react-router-dom"
 import "./HomePage.css"
@@ -11,11 +10,8 @@ const HomePage = () => {
     const [books, setBooks] = useState([]);
     const [error, setError] = useState(null);
 
-    // const { id } = useParams()
-
     useEffect(() => {
 
-        // if (!id) return;
         const fetchData = async () => {
             try {
                 const listOfBooks = await BooksAPI.getMyBooks();
@@ -28,8 +24,8 @@ const HomePage = () => {
     }, [])
 
     return (
-        <>
-            <h1>Home Page</h1>
+        <div className="HomePage">
+            <h1>BookBuddy</h1>
 
             {error && <p>{error.message}</p>}
 
@@ -42,29 +38,36 @@ const HomePage = () => {
 
             {books.length === 0 && <p>No books yet. Add your first one!</p>}
             
-            <h2>List of books you currently have:</h2>
+            {/*change this to tabs to filter by book status, including all books*/}
+            <h2>Currently reading:</h2>
             <ul className="book-grid">
-                {books.map((book) => (
+                {books.filter(book => book.status === "READING").map((book) => (
                     <li key={book.id}>
                         <BookCard book={book}/>
-                        {/* {book.cover_image && (
-                            <img src={book.cover_image} alt={`Cover of ${book.title}`} />
-                        )}
-
-                        <h3>{book.title}</h3>
-                        <p>Author: {book.author}</p>
-                        <p>Genre: {book.genre}</p>
-                        <p>Year: {book.year}</p>
-                        <p>Status: {book.status}</p>
-                        <p>Progress: {book.current_page} / {book.page_count} pages</p>
-                        <p>Added: {new Date(book.timestamp).toLocaleDateString()}</p>
-                        <p>Last updated: {new Date(book.last_updated).toLocaleDateString()}</p> */}
                     </li>
                 ))}
             </ul>
+            <br></br>
 
+            <h2>Unread:</h2>
+            <ul className="book-grid">
+                {books.filter(book => book.status === "UNREAD").map((book) => (
+                    <li key={book.id}>
+                        <BookCard book={book}/>
+                    </li>
+                ))}
+            </ul>
+            <br></br>
 
-        </>
+            <h2>Finished books:</h2>
+            <ul className="book-grid">
+                {books.filter(book => book.status === "FINISHED").map((book) => (
+                    <li key={book.id}>
+                        <BookCard book={book}/>
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
 };
 
