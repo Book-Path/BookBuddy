@@ -62,6 +62,30 @@ const createBooksTable = async () => {
   }
 };
 
+const createUpdateTrigger = async () => {
+    try {
+      await pool.query(`
+        CREATE OR REPLACE FUNCTION set_last_updated()
+        RETURNS TRIGGER AS $$
+        BEGIN
+          NEW.last_updated = NOW();
+          RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        DROP TRIGGER IF EXISTS page_update ON books;
+
+        CREATE TRIGGER page_update
+        BEFORE UPDATE ON books
+        FOR EACH ROW
+        WHEN (OLD.current_page < NEW.current_page)
+        EXECUTE FUNCTION set_last_updated();
+      `);
+  } catch (error) {
+    console.error("Error creating Books table update trigger", error);
+  }
+};
+
 const createAchievementsTable = async () => {
   try {
     await pool.query(`
@@ -104,6 +128,7 @@ const reset = async () => {
     await createUsersTable();
     await createReadingListsTable();
     await createBooksTable();
+    await createUpdateTrigger();
     await createAchievementsTable();
     //await seedAchievementsTable();
     await createUserAchievementsTable();
