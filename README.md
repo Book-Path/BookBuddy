@@ -24,15 +24,15 @@ Backend: Express and PostgreSQL using Render
 
 ## Features
 
-### User accounts
+### ✅ User accounts
 
 Users must register with an account in order to use the app.
 
-[gif goes here]
+<img src="https://i.imgur.com/qzHyCjX.gif">
 
-### Reading list view
+### ✅ Reading list view
 
-✅ Users can view the current books in their reading list, as well as books from their reading list they have finished reading.
+Users can view the current books in their reading list, as well as books from their reading list they have finished reading.
 
 <div>
     <a href="https://www.loom.com/share/c281cd24c3c546aabcebec800519cf4d">
@@ -43,35 +43,35 @@ Users must register with an account in order to use the app.
     </a>
   </div>
 
-### Add book
+### ✅ Add book
 
 Users can add a book to their reading list. They must input the title, author(s), genre(s), and length in pages.
 
-[gif goes here]
+<img src="https://i.imgur.com/xD02LsZ.gif">
 
-### Update book info
+### ✅ Update book info
 
 Users can correct the information of any book in their reading list.
 
-[gif goes here]
+<img src="https://i.imgur.com/aPJc9bn.gif">
 
-### Remove book
+### ✅ Remove book
 
 Users can remove a book from their reading list.
 
-[gif goes here]
+<img src="https://i.imgur.com/0QVmqP4.gif">
 
-### Finish book
+### ✅ Finish book
 
 Users can mark a book from their reading list as "finished", removing it from the reading list and adding it to a completed books archive.
 
-[gif goes here]
+<img src="https://i.imgur.com/R9w58v2.gif">
 
-### View completed books
+### ✅ View completed books
 
 Users can view all the books from their reading list that were finished.
 
-[gif goes here]
+<img src="https://i.imgur.com/qTu7zhv.gif">
 
 ### Earn achievements
 
