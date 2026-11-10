@@ -6,6 +6,7 @@ const toFormValues = (book) => ({
   genre: book?.genre ?? "",
   year: book?.year ?? "",
   pageCount: book?.page_count ?? "",
+  currentPage: book?.current_page ?? "",
   coverImage: book?.cover_image ?? "",
   status: book?.status ?? "UNREAD",
 });
@@ -26,6 +27,7 @@ const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = 
         ...form,
         year: form.year ? Number(form.year) : null,
         pageCount: form.pageCount ? Number(form.pageCount) : null,
+        currentPage: form.currentPage ? Number(form.currentPage) : null,
         coverImage: form.coverImage || null,
       });
       setError(null);
@@ -42,6 +44,7 @@ const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = 
       <input name="genre" placeholder="Genre" value={form.genre} onChange={handleChange} />
       <input name="year" type="number" placeholder="Year" value={form.year} onChange={handleChange} />
       <input name="pageCount" type="number" placeholder="Page count" value={form.pageCount} onChange={handleChange} />
+      <input name="currentPage" type="number" placeholder="Current page" value={form.currentPage} onChange={handleChange} />
       <input name="coverImage" placeholder="Cover image URL" value={form.coverImage} onChange={handleChange} />
 
       {initialValues && (
