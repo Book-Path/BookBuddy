@@ -1,13 +1,78 @@
-.home-links {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
+.home-page {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  align-items: start;
+  width: 100%;
+  min-height: 100svh;
+  box-sizing: border-box;
+  text-align: left;
 }
 
-.book-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+.home-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  margin: 0;
+  text-align: left;
+  height: 100svh;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--accent-two);
+}
+
+.home-header h1 {
+  color: var(--bg);
+}
+
+.home-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.logout-button {
+  margin-top: auto;
+  text-align: left;
+  border: none;
+  border-radius: 0;
+  font-style: times;
+  padding: 8px;
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.home-links a {
+  text-decoration: none;
+  font-family: var(--heading);
+  font-weight: 500;
+  font-size: 20px;
+  padding: 8px;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  overflow-x: hidden;
+}
+
+.book-section-header {
+  margin: 0 0 16px 0;
+}
+
+.book-list {
+  display: flex;
+  flex-direction: column;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -20,6 +85,22 @@
 }
 
 @media (max-width: 600px) {
+  .home-page {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+
+  .home-header {
+    position: static;
+    height: auto;
+  }
+
+  .home-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
   .book-grid {
     grid-template-columns: 1fr;
   }

@@ -5,7 +5,7 @@ import "./HomePage.css"
 import BookCard from "../components/BookCard"
 
 
-const HomePage = () => {
+const HomePage = ({ onLogout }) => {
 
     const [books, setBooks] = useState([]);
     const [error, setError] = useState(null);
@@ -24,50 +24,58 @@ const HomePage = () => {
     }, [])
 
     return (
-        <div className="HomePage">
-            <h1>BookBuddy</h1>
+        <div className="home-page">
+            <div className="home-header">
+                <h1>BookBuddy</h1>
+                <nav className="home-links">
+                    <a href="#current" className="tab-button">Current Books</a>
+                    <a href="#unread" className="tab-button">Unread Books</a>
+                    <a href="#finished" className="tab-button">Finished Books</a>
+                    <Link to="/books/new">Add Book</Link>
+                    <Link to="/books/manage">Manage Books</Link>
+                </nav>
+                <button onClick={onLogout} className="logout-button">Logout</button>
+            </div>
 
-            {error && <p>{error.message}</p>}
+            <div className="home-content">
+                {error && <p>{error.message}</p>}
+                {books.length === 0 && <p>No books yet. Add your first one!</p>}
 
-            
+                {/*change this to tabs to filter by book status, including all books*/}
+                <div id="current" className="book-status-section">
+                    <h1 className="book-section-header">Currently Reading</h1>
+                    <ul className="book-list">
+                        {books.filter(book => book.status === "READING").map((book, index) => (
+                            <li key={book.id}>
+                                <BookCard book={book} className={index % 2 === 0 ? "even" : "odd"} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-            <nav className="home-links">
-                <Link to="/books/new">Add a book</Link>
-                <Link to="/books/manage">Manage Books</Link>
-            </nav>
+                <div id="unread" className="book-status-section">
+                    <h1 className="book-section-header">Unread</h1>
+                    <ul className="book-list">
+                        {books.filter(book => book.status === "UNREAD").map((book, index) => (
+                            <li key={book.id}>
+                                <BookCard book={book} className={index % 2 === 0 ? "even" : "odd"} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-            {books.length === 0 && <p>No books yet. Add your first one!</p>}
-            
-            {/*change this to tabs to filter by book status, including all books*/}
-            <h2>Currently reading:</h2>
-            <ul className="book-grid">
-                {books.filter(book => book.status === "READING").map((book) => (
-                    <li key={book.id}>
-                        <BookCard book={book}/>
-                    </li>
-                ))}
-            </ul>
-            <br></br>
-
-            <h2>Unread:</h2>
-            <ul className="book-grid">
-                {books.filter(book => book.status === "UNREAD").map((book) => (
-                    <li key={book.id}>
-                        <BookCard book={book}/>
-                    </li>
-                ))}
-            </ul>
-            <br></br>
-
-            <h2>Finished books:</h2>
-            <ul className="book-grid">
-                {books.filter(book => book.status === "FINISHED").map((book) => (
-                    <li key={book.id}>
-                        <BookCard book={book}/>
-                    </li>
-                ))}
-            </ul>
-        </div>
+                <div id="finished" className="book-status-section">
+                    <h1 className="book-section-header">Finished Books</h1>
+                    <ul className="book-list">
+                        {books.filter(book => book.status === "FINISHED").map((book, index) => (
+                            <li key={book.id}>
+                                <BookCard book={book} className={index % 2 === 0 ? "even" : "odd"} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div >
     )
 };
 

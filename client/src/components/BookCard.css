@@ -1,25 +1,33 @@
 .book-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  height: 100%;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  justify-content: flex-start;
+  padding: 12px 24px;
+  width: 100%;
   box-sizing: border-box;
 }
 
-.book-card-image {
+.book-card-body {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1;
+  min-width: 0;
+  gap: 24px;
+}
+
+.odd {
+  background-color: var(--bg-off);
+}
+
+.even {
+  background-color: var(--accent-one);
+  color: var(--bg);
 }
 
 .book-card-image img,
 .book-card-placeholder {
-  width: 100%;
+  height: 200px;
   aspect-ratio: 2 / 3;
-  border-radius: 0.25rem;
 }
 
 .book-card-image img {
@@ -32,32 +40,62 @@
   justify-content: center;
   background: #eee;
   color: #888;
-  font-size: 0.875rem;
 }
 
 .book-card-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .book-card-details h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1.1rem;
-  overflow-wrap: anywhere;
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
 }
 
 .book-card-details p {
   margin: 0;
-  font-size: 0.875rem;
+  padding: 0;
+  font-size: 18px;
 }
 
 .book-card-details {
   text-align: left;
 }
 
-.book-header {
+.metadata {
   display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.book-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.reading-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.edit-button {
+  margin: auto;
+  text-align: left;
+  border: none;
+  border-radius: 0;
+  font-style: times;
+  padding: 8px;
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.odd .edit-button {
+  background-color: var(--accent-one);
+  color: var(--bg);
 }

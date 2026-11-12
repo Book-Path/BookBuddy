@@ -1,6 +1,5 @@
-import "./App.css";
 import { useState, useEffect } from "react";
-import { useRoutes } from "react-router-dom";
+import { useLocation, useRoutes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import AchievementsPage from "./pages/AchievementsPage";
@@ -11,6 +10,7 @@ const API_URL = "http://localhost:3001";
 
 function App() {
   const [user, setUser] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     const getUser = async () => {
@@ -34,12 +34,12 @@ function App() {
   const element = useRoutes([
     {
       path: "/",
-      element: user && user.id ? (<HomePage user={user} api_url={API_URL} />) : (<LoginPage api_url={API_URL} />),
+      element: user && user.id ? (<HomePage user={user} api_url={API_URL} onLogout={logout} />) : (<LoginPage api_url={API_URL} />),
     },
     {
       path: "/Achievements",
       element: user && user.id ? (<AchievementsPage user={user} api_url={API_URL} />) : (<LoginPage api_url={API_URL} />),
-    }, 
+    },
     {
       path: "/books/new",
       element: user && user.id ? <AddBookPage /> : <LoginPage api_url={API_URL} />,
@@ -53,14 +53,11 @@ function App() {
   return (
     <div className="App">
       {element}
-      {user && user.id ? (
+      {user && user.id && location.pathname !== "/" ? (
         <div className="header">
-          <button onClick={logout} className='header-button'>Logout</button>
+          <button onClick={logout} className="header-button">Logout</button>
         </div>
-      ) : (
-        <></>
-      )}
-      
+      ) : null}
     </div>
   );
 }
