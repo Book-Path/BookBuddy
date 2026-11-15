@@ -1,0 +1,81 @@
+.add-book-page {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    align-items: start;
+    width: 100%;
+    min-height: 100svh;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.add-book-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    overflow-x: hidden;
+}
+
+.book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px;
+    width: 100%;
+    background-color: var(--accent-one);
+    color: var(--bg);
+    box-sizing: border-box;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-field label {
+    font-size: 18px;
+}
+
+.form-field input,
+.form-field textarea {
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+    outline: none;
+    border: 2px solid var(--text);
+}
+
+.add-book-btn {
+    background-color: var(--bg);
+    color: var(--text);
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    width: 164px;
+}
+
+.home-btn {
+    background-color: var(--accent-two);
+    color: var(--bg);
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    margin-left: 16px;
+    padding: 8px 16px;
+    cursor: pointer;
+    width: 164px;
+    box-sizing: border-box;
+}
