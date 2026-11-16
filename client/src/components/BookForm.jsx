@@ -1,5 +1,6 @@
 import { useState } from "react";
 import '../pages/AddBookPage.css';
+import '../pages/HomePage.css';
 
 const toFormValues = (book) => ({
   title: book?.title ?? "",
@@ -81,8 +82,11 @@ const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = 
         )
       }
 
-      <button className="add-book-btn" type="submit">Add Book</button>
-      {onCancel && <button className="add-book-btn" type="button" onClick={onCancel}>Cancel</button>}
+      <div className="form-buttons">
+        <button className="add-book-btn" type="submit">Add Book</button>
+        {onCancel && <button className="cancel-btn" type="button" onClick={onCancel}>Cancel</button>}
+      </div>
+
       {error && <p>{error}</p>}
     </form >
   );

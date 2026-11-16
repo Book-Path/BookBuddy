@@ -38,11 +38,11 @@ function App() {
     },
     {
       path: "/Achievements",
-      element: user && user.id ? (<AchievementsPage user={user} api_url={API_URL} />) : (<LoginPage api_url={API_URL} />),
+      element: user && user.id ? (<AchievementsPage user={user} api_url={API_URL} onLogout={logout} />) : (<LoginPage api_url={API_URL} />),
     },
     {
       path: "/books/new",
-      element: user && user.id ? <AddBookPage /> : <LoginPage api_url={API_URL} />,
+      element: user && user.id ? <AddBookPage api_url={API_URL} onLogout={logout} /> : <LoginPage api_url={API_URL} />,
     },
     {
       path: "/books/manage",
@@ -53,11 +53,6 @@ function App() {
   return (
     <div className="App">
       {element}
-      {user && user.id && location.pathname !== "/" ? (
-        <div className="header">
-          <button onClick={logout} className="header-button">Logout</button>
-        </div>
-      ) : null}
     </div>
   );
 }
