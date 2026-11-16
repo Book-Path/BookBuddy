@@ -78,6 +78,25 @@
   margin: 0;
 }
 
+.even .book-form {
+  background-color: var(--accent-two);
+}
+
+.book-card .book-form .form-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.book-card .book-form .cancel-btn {
+  background-color: var(--text);
+  color: var(--bg);
+  width: 164px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   .book-grid {
     grid-template-columns: repeat(2, 1fr);

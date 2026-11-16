@@ -32,7 +32,6 @@ const HomePage = ({ onLogout }) => {
                     <a href="#unread" className="tab-button">Unread Books</a>
                     <a href="#finished" className="tab-button">Finished Books</a>
                     <Link to="/books/new">Add Book</Link>
-                    <Link to="/books/manage">Manage Books</Link>
                 </nav>
                 <button onClick={onLogout} className="logout-button">Logout</button>
             </div>

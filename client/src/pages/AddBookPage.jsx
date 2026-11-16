@@ -16,7 +16,6 @@ const AddBookPage = ({ onLogout }) => {
           <Link to="/#unread" className="tab-button">Unread Books</Link>
           <Link to="/#finished" className="tab-button">Finished Books</Link>
           <Link to="/books/new">Add Book</Link>
-          <Link to="/books/manage">Manage Books</Link>
         </nav>
         <button onClick={onLogout} className="logout-button">Logout</button>
       </div>
