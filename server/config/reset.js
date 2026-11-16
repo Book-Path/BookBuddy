@@ -1,4 +1,5 @@
 import { pool } from "./database.js";
+import achievementData from "../data/achievements.js";
 
 const createStatusEnum = async () => {
   try {
@@ -18,7 +19,9 @@ const createUsersTable = async () => {
         github_id INTEGER NOT NULL,
         username VARCHAR(50) NOT NULL,
         avatar_url VARCHAR(500) NOT NULL,
-        access_token VARCHAR(500) NOT NULL
+        access_token VARCHAR(500) NOT NULL,
+        books_read INTEGER DEFAULT 0,
+        pages_read INTEGER DEFAULT 0
       )
     `);
   } catch (error) {
@@ -116,7 +119,20 @@ const createUserAchievementsTable = async () => {
 
 //insert achievements from data/achievements.js
 const seedAchievementsTable = async () => {
+  await createAchievementsTable();
+  await createUserAchievementsTable();
 
+  achievementData.forEach((achievement) => {
+    pool.query(`
+      INSERT INTO Achievements (name, requirement)
+      VALUES ($1, $2)
+    `, [achievement.name, achievement.requirement], (err, res) => {
+      if (err) {
+        console.error("Error inserting achievement", err);
+        return;
+      }
+    });
+  });
 };
 
 const reset = async () => {
@@ -129,9 +145,7 @@ const reset = async () => {
     await createReadingListsTable();
     await createBooksTable();
     await createUpdateTrigger();
-    await createAchievementsTable();
-    //await seedAchievementsTable();
-    await createUserAchievementsTable();
+    await seedAchievementsTable();
   } catch (error) {
     console.error("Error running reset function", error);
   }
