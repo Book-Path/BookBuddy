@@ -97,6 +97,15 @@
   cursor: pointer;
 }
 
+.book-card .book-form .delete-btn {
+  background-color: rgb(78, 0, 0);
+  color: var(--bg);
+  width: 164px;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
 @media (max-width: 900px) {
   .book-grid {
     grid-template-columns: repeat(2, 1fr);

@@ -13,7 +13,7 @@ const toFormValues = (book) => ({
   status: book?.status ?? "UNREAD",
 });
 
-const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = "Save" }) => {
+const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = "Save", onDelete }) => {
   const [form, setForm] = useState(toFormValues(initialValues));
   const [error, setError] = useState(null);
 
@@ -34,6 +34,15 @@ const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = 
       });
       setError(null);
       onSuccess(saved);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await onDelete();
+      setError(null);
     } catch (err) {
       setError(err.message);
     }
@@ -85,6 +94,7 @@ const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = 
       <div className="form-buttons">
         <button className="add-book-btn" type="submit">{submitLabel}</button>
         {onCancel && <button className="cancel-btn" type="button" onClick={onCancel}>Cancel</button>}
+        {onDelete && <button className="delete-btn" type="button" onClick={handleDelete}>Delete</button>}
       </div>
 
       {error && <p>{error}</p>}

@@ -23,6 +23,14 @@ const HomePage = ({ onLogout }) => {
         fetchData();
     }, [])
 
+    const handleBookUpdated = (updatedBook) => {
+        setBooks((currentBooks) => currentBooks.map((book) => book.id === updatedBook.id ? updatedBook : book));
+    };
+
+    const handleBookDeleted = (deletedBookId) => {
+        setBooks((currentBooks) => currentBooks.filter((book) => book.id !== deletedBookId));
+    };
+
     return (
         <div className="home-page">
             <div className="home-header">
@@ -47,7 +55,12 @@ const HomePage = ({ onLogout }) => {
                     <ul className="book-list">
                         {books.filter(book => book.status === "READING").map((book, index) => (
                             <li key={book.id}>
-                                <BookCard book={book} className={index % 2 === 0 ? "even" : "odd"} />
+                                <BookCard
+                                    book={book}
+                                    className={index % 2 === 0 ? "even" : "odd"}
+                                    onBookUpdated={handleBookUpdated}
+                                    onBookDeleted={handleBookDeleted}
+                                />
                             </li>
                         ))}
                     </ul>
@@ -58,7 +71,12 @@ const HomePage = ({ onLogout }) => {
                     <ul className="book-list">
                         {books.filter(book => book.status === "UNREAD").map((book, index) => (
                             <li key={book.id}>
-                                <BookCard book={book} className={index % 2 === 0 ? "even" : "odd"} />
+                                <BookCard
+                                    book={book}
+                                    className={index % 2 === 0 ? "even" : "odd"}
+                                    onBookUpdated={handleBookUpdated}
+                                    onBookDeleted={handleBookDeleted}
+                                />
                             </li>
                         ))}
                     </ul>
@@ -69,7 +87,12 @@ const HomePage = ({ onLogout }) => {
                     <ul className="book-list">
                         {books.filter(book => book.status === "FINISHED").map((book, index) => (
                             <li key={book.id}>
-                                <BookCard book={book} className={index % 2 === 0 ? "even" : "odd"} />
+                                <BookCard
+                                    book={book}
+                                    className={index % 2 === 0 ? "even" : "odd"}
+                                    onBookUpdated={handleBookUpdated}
+                                    onBookDeleted={handleBookDeleted}
+                                />
                             </li>
                         ))}
                     </ul>

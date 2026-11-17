@@ -5,18 +5,20 @@ import "./BookCard.css";
 
 const formatDate = (value) => (value ? new Date(value).toLocaleString() : "—");
 
-export default function BookCard({ book, className = "" }) {
+export default function BookCard({ book, className = "", onBookUpdated, onBookDeleted }) {
 
     const [currentBook, setCurrentBook] = useState(book);
     const [isEditing, setIsEditing] = useState(false);
 
-    const handleEdit = () => {
-        setIsEditing(true);
-    };
-
     const handleSaved = (updated) => {
         setCurrentBook(updated);
         setIsEditing(false);
+        onBookUpdated(updated);
+    };
+
+    const handleDelete = async () => {
+        await BooksAPI.deleteBook(currentBook.id);
+        onBookDeleted(currentBook.id);
     };
 
     return (
@@ -37,6 +39,7 @@ export default function BookCard({ book, className = "" }) {
                             onSubmit={(data) => BooksAPI.editBook(currentBook.id, data)}
                             onSuccess={handleSaved}
                             onCancel={() => setIsEditing(false)}
+                            onDelete={handleDelete}
                         />
                     </div>
                 </div>
@@ -60,7 +63,7 @@ export default function BookCard({ book, className = "" }) {
                         </div>
                     </div>
                     <div className="book-card-edit-button">
-                        <button className="edit-button" onClick={handleEdit}>Edit</button>
+                        <button className="edit-button" onClick={() => setIsEditing(true)}>Edit</button>
                     </div>
                 </div>)
             }
