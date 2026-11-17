@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
-import { useLocation, useRoutes } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import AchievementsPage from "./pages/AchievementsPage";
 import AddBookPage from "./pages/AddBookPage";
 import ManageBooksPage from "./pages/ManageBooksPage";
-
-const API_URL = "https://server-uwgo.onrender.com";
+import { API_URL } from "./config";
 
 function App() {
   const [user, setUser] = useState(null);
-  const location = useLocation();
 
   useEffect(() => {
     const getUser = async () => {

@@ -1,7 +1,9 @@
+import { API_URL } from "../config";
  
 
 //HTTP request: GET /api/books/{id}
-const API_URL = "http://localhost:3001/api/books";
+
+const BOOKS_URL = `${API_URL}/api/books`;
 
 
 const request = async (url, options = {}) => {
@@ -27,22 +29,22 @@ const request = async (url, options = {}) => {
 }
 
 // const getBooks = async (id) => request(`${API_URL}/${id}`)
-const getMyBooks = async () => request(API_URL);
-const createBook = async (book) => request(API_URL, {
+const getMyBooks = async () => request(BOOKS_URL);
+const createBook = async (book) => request(BOOKS_URL, {
     method: "POST",
     body: JSON.stringify(book),
 });
 
-const editBook = async (id, book) => request(`${API_URL}/edit/${id}`, {
+const editBook = async (id, book) => request(`${BOOKS_URL}/edit/${id}`, {
     method: "PATCH",
     body: JSON.stringify(book),
 });
 
-const deleteBook = async (id) => request(`${API_URL}/${id}`, {
+const deleteBook = async (id) => request(`${BOOKS_URL}/${id}`, {
     method: "DELETE",
 })
 
 
-const getMyAchievements = async () => request("http://localhost:3001/api/achievements")
+const getMyAchievements = async () => request(`${API_URL}/api/achievements`);
 
 export default { getMyBooks, createBook, editBook, deleteBook, getMyAchievements };
