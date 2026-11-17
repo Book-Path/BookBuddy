@@ -4,7 +4,7 @@ CodePath WEB103 Final Project
 
 Designed and developed by: David Lema, McKenna Parker, Mihir Patel, and Zamijah Shakeur-Tompkins
 
-🔗 Link to deployed app:
+🔗 Link to deployed app: https://client-8f6l.onrender.com/
 
 ## About
 
@@ -71,7 +71,3 @@ Users can view a list of earned achievements and a list of all possible achievem
 Users can earn achievements based on reading stats accumulated by finishing books from their reading list.
 
 <img src="https://i.imgur.com/f0WbM33.gif">
-
-## Installation Instructions
-
-[instructions go here]
