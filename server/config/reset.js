@@ -89,6 +89,42 @@ const createUpdateTrigger = async () => {
   }
 };
 
+const createReadingStatsTrigger = async () => {
+  try {
+    await pool.query(`
+      CREATE OR REPLACE FUNCTION update_user_reading_stats()
+      RETURNS TRIGGER AS $$
+      BEGIN
+        UPDATE users
+        SET pages_read = pages_read + NEW.current_page - OLD.current_page,
+            books_read = books_read
+              + CASE
+                  WHEN OLD.status IS DISTINCT FROM 'FINISHED'
+                    AND NEW.status = 'FINISHED'
+                  THEN 1
+                  ELSE 0
+                END
+        WHERE id = (
+          SELECT user_id
+          FROM readinglists
+          WHERE id = NEW.list_id
+        );
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
+
+      DROP TRIGGER IF EXISTS user_reading_stats_update ON books;
+
+      CREATE TRIGGER user_reading_stats_update
+      AFTER UPDATE OF current_page, status ON books
+      FOR EACH ROW
+      EXECUTE FUNCTION update_user_reading_stats();
+    `);
+  } catch (error) {
+    console.error("Error creating user reading stats trigger", error);
+  }
+};
+
 const createAchievementsTable = async () => {
   try {
     await pool.query(`
@@ -145,6 +181,7 @@ const reset = async () => {
     await createReadingListsTable();
     await createBooksTable();
     await createUpdateTrigger();
+    await createReadingStatsTrigger();
     await seedAchievementsTable();
   } catch (error) {
     console.error("Error running reset function", error);
