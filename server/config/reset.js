@@ -1,4 +1,5 @@
 import { pool } from "./database.js";
+import achievementData from "../data/achievements.js";
 
 const createStatusEnum = async () => {
   try {
@@ -18,7 +19,9 @@ const createUsersTable = async () => {
         github_id INTEGER NOT NULL,
         username VARCHAR(50) NOT NULL,
         avatar_url VARCHAR(500) NOT NULL,
-        access_token VARCHAR(500) NOT NULL
+        access_token VARCHAR(500) NOT NULL,
+        books_read INTEGER DEFAULT 0,
+        pages_read INTEGER DEFAULT 0
       )
     `);
   } catch (error) {
@@ -62,6 +65,28 @@ const createBooksTable = async () => {
   }
 };
 
+const createReadingActivitiesTable = async () => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS ReadingActivities (
+        id SERIAL PRIMARY KEY,
+        user_id INT NOT NULL REFERENCES Users(id),
+        book_id INT REFERENCES Books(id) ON DELETE SET NULL,
+        pages_read INT NOT NULL DEFAULT 0 CHECK (pages_read >= 0),
+        book_finished BOOLEAN NOT NULL DEFAULT FALSE,
+        occurred_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        CHECK (pages_read > 0 OR book_finished)
+      )
+    `);
+    await pool.query(`
+      CREATE INDEX IF NOT EXISTS reading_activities_user_occurred_at_idx
+      ON ReadingActivities (user_id, occurred_at)
+    `);
+  } catch (error) {
+    console.error("Error creating ReadingActivities table", error);
+  }
+};
+
 const createUpdateTrigger = async () => {
     try {
       await pool.query(`
@@ -91,8 +116,11 @@ const createAchievementsTable = async () => {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS Achievements (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(255),
-        requirement TEXT
+        name VARCHAR(255) NOT NULL,
+        requirement TEXT NOT NULL,
+        metric VARCHAR(50) NOT NULL CHECK (metric IN ('books_read', 'pages_read')),
+        threshold INTEGER NOT NULL CHECK (threshold > 0),
+        UNIQUE (metric, threshold)
       )
     `)
   } catch (error) {
@@ -105,8 +133,10 @@ const createUserAchievementsTable = async () => {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS UserAchievements (
         id SERIAL PRIMARY KEY,
-        acheivement_id INT REFERENCES Achievements(id),
-        user_id INT REFERENCES Users(id)
+        achievement_id INT NOT NULL REFERENCES Achievements(id),
+        user_id INT NOT NULL REFERENCES Users(id),
+        earned_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        UNIQUE (achievement_id, user_id)
       )
     `);
   } catch (error) {
@@ -116,22 +146,36 @@ const createUserAchievementsTable = async () => {
 
 //insert achievements from data/achievements.js
 const seedAchievementsTable = async () => {
+  await createAchievementsTable();
+  await createUserAchievementsTable();
 
+  for (const achievement of achievementData) {
+    await pool.query(`
+      INSERT INTO Achievements (name, requirement, metric, threshold)
+      VALUES ($1, $2, $3, $4)
+    `, [
+      achievement.name,
+      achievement.requirement,
+      achievement.metric,
+      achievement.threshold,
+    ]);
+  }
 };
 
 const reset = async () => {
   try {
-    await pool.query("DROP TABLE IF EXISTS Users, ReadingLists, Books, Achievements, UserAchievements CASCADE;");
+    await pool.query("DROP TABLE IF EXISTS Users, ReadingLists, Books, ReadingActivities, Achievements, UserAchievements CASCADE;");
     await pool.query("DROP TYPE IF EXISTS ReadingStatus;");
+    await pool.query("DROP FUNCTION IF EXISTS update_user_reading_stats();");
+    await pool.query("DROP FUNCTION IF EXISTS award_user_achievements();");
 
     await createStatusEnum();
     await createUsersTable();
     await createReadingListsTable();
     await createBooksTable();
+    await createReadingActivitiesTable();
     await createUpdateTrigger();
-    await createAchievementsTable();
-    //await seedAchievementsTable();
-    await createUserAchievementsTable();
+    await seedAchievementsTable();
   } catch (error) {
     console.error("Error running reset function", error);
   }

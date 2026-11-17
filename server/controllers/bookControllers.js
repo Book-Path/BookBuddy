@@ -1,4 +1,5 @@
 import { pool } from "../config/database.js";
+import readingActivityService from "../services/readingActivityService.js";
 
 
 const getMyBooks = async (req, res) => {
@@ -44,19 +45,13 @@ const addBook = async (req, res) => {
 const editBookInfo = async (req, res) => {
   try {
     const bookId = parseInt(req.params.bookId);
-    const { title, author, genre, year, pageCount, currentPage, coverImage, status } = req.body;
 
-    const results = await pool.query(`
-      UPDATE Books
-      SET title = $1, author = $2, genre = $3, year = $4, page_count = $5, current_page = $6, cover_image = $7, status = $8
-      WHERE id = $9
-      AND list_id IN (SELECT id FROM readinglists WHERE user_id = $10)
-      RETURNING *
-    `, [title, author, genre, year, pageCount, currentPage, coverImage, status, bookId, req.user.id]);
-
-    if (results.rows.length === 0) return res.status(404).json({ error: "Book not found" });
+    const book = await readingActivityService.updateBook(req.user.id, bookId, req.body);
+    if (!book) {
+      return res.status(404).json({ error: "Book not found" });
+    }
     
-    res.status(200).json(results.rows[0]);
+    res.status(200).json(book);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -37,7 +37,7 @@ function App() {
       element: user && user.id ? (<HomePage user={user} api_url={API_URL} onLogout={logout} />) : (<LoginPage api_url={API_URL} />),
     },
     {
-      path: "/Achievements",
+      path: "/achievements",
       element: user && user.id ? (<AchievementsPage user={user} api_url={API_URL} onLogout={logout} />) : (<LoginPage api_url={API_URL} />),
     },
     {
