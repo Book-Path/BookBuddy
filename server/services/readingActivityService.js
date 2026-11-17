@@ -47,7 +47,7 @@ const updateBook = async (userId, bookId, bookDetails) => {
     const pageDifference = newBookData.current_page - oldBookData.current_page;
     const isChangeToFinish = oldBookData.status !== "FINISHED" && newBookData.status === "FINISHED";
 
-    if (pageDifference !== 0 || isChangeToFinish) {
+    if (pageDifference > 0 || isChangeToFinish) {
       const statsResult = await client.query(`
         UPDATE users
         SET pages_read = pages_read + $1, books_read = books_read + $2
@@ -58,13 +58,11 @@ const updateBook = async (userId, bookId, bookDetails) => {
       if (statsResult.rows.length === 0) {
         throw new Error(`Could not update reading stats for user ${userId}`);
       }
-
-      if (pageDifference > 0 || isChangeToFinish) {
-        await client.query(`
-          INSERT INTO readingactivities (user_id, book_id, pages_read, book_finished)
-          VALUES ($1, $2, $3, $4)
-        `, [userId, bookId, pageDifference, isChangeToFinish]);
-      }
+      
+      await client.query(`
+        INSERT INTO readingactivities (user_id, book_id, pages_read, book_finished)
+        VALUES ($1, $2, $3, $4)
+      `, [userId, bookId, pageDifference, isChangeToFinish]);
 
       await awardAchievements(client, userId, statsResult.rows[0]);
     }
