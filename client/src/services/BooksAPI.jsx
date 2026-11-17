@@ -42,4 +42,7 @@ const deleteBook = async (id) => request(`${API_URL}/${id}`, {
     method: "DELETE",
 })
 
-export default { getMyBooks, createBook, editBook, deleteBook };
+
+const getMyAchievements = async () => request("http://localhost:3001/api/achievements")
+
+export default { getMyBooks, createBook, editBook, deleteBook, getMyAchievements };
