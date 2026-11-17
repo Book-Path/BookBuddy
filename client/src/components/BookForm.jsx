@@ -83,7 +83,7 @@ const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = 
       }
 
       <div className="form-buttons">
-        <button className="add-book-btn" type="submit">Add Book</button>
+        <button className="add-book-btn" type="submit">{submitLabel}</button>
         {onCancel && <button className="cancel-btn" type="button" onClick={onCancel}>Cancel</button>}
       </div>
 
