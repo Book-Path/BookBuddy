@@ -28,62 +28,49 @@ Backend: Express and PostgreSQL using Render
 
 Users must register with an account in order to use the app.
 
-<img src="https://i.imgur.com/qzHyCjX.gif">
+<img src="https://i.imgur.com/DB6sTKb.gif">
 
 ### ✅ Reading list view
 
 Users can view the current books in their reading list, as well as books from their reading list they have finished reading.
 
-<div>
-    <a href="https://www.loom.com/share/c281cd24c3c546aabcebec800519cf4d">
-      <p>Reading List View Feat - Watch Video</p>
-    </a>
-    <a href="https://www.loom.com/share/c281cd24c3c546aabcebec800519cf4d">
-      <img style="max-width:300px;" src="https://www.loom.com/v1/videos/c281cd24c3c546aabcebec800519cf4d/thumbnail.gif">
-    </a>
-  </div>
+<img src="https://i.imgur.com/iIu9nFZ.gif">
 
 ### ✅ Add book
 
 Users can add a book to their reading list. They must input the title, author(s), genre(s), and length in pages.
 
-<img src="https://i.imgur.com/xD02LsZ.gif">
+<img src="https://i.imgur.com/89VWOYQ.gif">
 
 ### ✅ Update book info
 
 Users can correct the information of any book in their reading list.
 
-<img src="https://i.imgur.com/aPJc9bn.gif">
+<img src="https://i.imgur.com/9YxUHSe.gif">
 
 ### ✅ Remove book
 
 Users can remove a book from their reading list.
 
-<img src="https://i.imgur.com/0QVmqP4.gif">
+<img src="https://i.imgur.com/MSJafil.gif">
 
 ### ✅ Finish book
 
 Users can mark a book from their reading list as "finished", removing it from the reading list and adding it to a completed books archive.
 
-<img src="https://i.imgur.com/R9w58v2.gif">
+<img src="https://i.imgur.com/NL86FvX.gif">
 
-### ✅ View completed books
-
-Users can view all the books from their reading list that were finished.
-
-<img src="https://i.imgur.com/qTu7zhv.gif">
-
-### Earn achievements
-
-Users can earn achievements based on reading stats accumulated by finishing books from their reading list.
-
-[gif goes here]
-
-### View achievements
+### ✅ View achievements
 
 Users can view a list of earned achievements and a list of all possible achievements.
 
-[gif goes here]
+<img src="https://i.imgur.com/0pf70fz.gif">
+
+### ✅ Earn achievements
+
+Users can earn achievements based on reading stats accumulated by finishing books from their reading list.
+
+<img src="https://i.imgur.com/f0WbM33.gif">
 
 ## Installation Instructions
 
