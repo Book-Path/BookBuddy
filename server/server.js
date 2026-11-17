@@ -6,6 +6,7 @@ import { GitHub } from "./config/auth.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import bookRoutes from "./routes/bookRoutes.js";
+import achievementRoutes from "./routes/achievementRoutes.js";
 
 const app = express();
 
@@ -53,6 +54,7 @@ const requireAuth = (req, res, next) => {
 
 app.use("/auth", authRoutes);
 app.use("/api/books/", requireAuth, bookRoutes);
+app.use("/api/achievements", requireAuth, achievementRoutes);
 
 const PORT = process.env.PORT || 3001;
 
