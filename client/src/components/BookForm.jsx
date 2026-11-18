@@ -13,7 +13,7 @@ const toFormValues = (book) => ({
   status: book?.status ?? "UNREAD",
 });
 
-const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = "Save", onDelete }) => {
+const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = "Save", onDelete, showStatus = false }) => {
   const [form, setForm] = useState(toFormValues(initialValues));
   const [error, setError] = useState(null);
 
@@ -80,14 +80,17 @@ const BookForm = ({ initialValues, onSubmit, onSuccess, onCancel, submitLabel = 
           <input name="coverImage" placeholder="Cover image URL" value={form.coverImage} onChange={handleChange} />
         </div>
       </div>
-
+      
       {
-        initialValues && (
-          <select name="status" value={form.status} onChange={handleChange}>
-            <option value="UNREAD">Unread</option>
-            <option value="READING">Reading</option>
-            <option value="FINISHED">Finished</option>
-          </select>
+        showStatus && (
+          <div className="form-field">
+            <label htmlFor="status">Status</label>
+            <select id="status" name="status" value={form.status} onChange={handleChange}>
+              <option value="UNREAD">Unread</option>
+              <option value="READING">Reading</option>
+              <option value="FINISHED">Finished</option>
+            </select>
+          </div>
         )
       }
 
