@@ -34,8 +34,9 @@ export default function BookCard({ book, className = "", onBookUpdated, onBookDe
                 <div className="book-card-body">
                     <div className="book-card-details">
                         <BookForm
+                            showStatus
                             initialValues={currentBook}
-                            submitLabel="Edit"
+                            submitLabel="Save Changes"
                             onSubmit={(data) => BooksAPI.editBook(currentBook.id, data)}
                             onSuccess={handleSaved}
                             onCancel={() => setIsEditing(false)}
