@@ -28,7 +28,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://client-8f6l.onrender.com",
+    origin: process.env.CLIENT_URL,
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   }),
